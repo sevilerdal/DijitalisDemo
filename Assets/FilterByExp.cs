@@ -8,7 +8,7 @@ public class FilterByExp : MonoBehaviour
     List<GameObject> items = new List<GameObject>();
     List<GameObject> more = new List<GameObject>();
     List<GameObject> less = new List<GameObject>();
-    private bool isOn;
+    public bool expFilterOn;
     private ItemList itemIns;
     private void Awake()
     {
@@ -16,7 +16,7 @@ public class FilterByExp : MonoBehaviour
     }
     private void FilterExp()
     {
-        isOn = true;
+        expFilterOn = true;
         ClearLists();
         foreach (var item in itemIns.Items)
         {
@@ -26,21 +26,17 @@ public class FilterByExp : MonoBehaviour
                 // Adds to "more" list
                 more.Add(item);
             }
-            else // Items with less days to expire
+            else if (item.GetComponent<ItemInfo>().ExpDate <= 30) // Items with less days to expire
             {
                 // Adds to "less" list
                 less.Add(item);
             }
         }
-
         SetGlow();
     }
 
     private void SetGlow()
     {
-        Debug.Log("setglow");
-        Debug.Log($"more : {more.Count}");
-        Debug.Log($"less : {less.Count}");
         // Getting instance of filter
         var filter = GlowFilter.Instance;
         // Filtering items of more days to exp with green
@@ -50,7 +46,7 @@ public class FilterByExp : MonoBehaviour
     }
     private void CloseGlow()
     {
-        isOn = false;
+        expFilterOn = false;
         // Getting instance of filter
         var filter = GlowFilter.Instance;
         // Turning off filters - items of more days to exp
@@ -69,13 +65,12 @@ public class FilterByExp : MonoBehaviour
 
     public void ToggleFilter()
     {
-        if (isOn)
+        if (expFilterOn)
         {
             CloseGlow();
         }
         else
         {
-            Debug.Log("Should filter");
             FilterExp();
         }
     }

@@ -24,12 +24,9 @@ public class GlowFilter : Singleton<GlowFilter>
 
     public void GlowOn(Color color, List<GameObject> obj)
     {
-        Debug.Log($"obj : {obj.Count}");
-        Debug.Log($"color : {color}");
         // Creating new material block
         matBlock = new MaterialPropertyBlock();
         SetReferences(obj);
-        Debug.Log($"renderers : {obj.Count}");
         for (int i = 0; i < renderers.Count; i++)
         {
             renderers[i].GetPropertyBlock(matBlock);
