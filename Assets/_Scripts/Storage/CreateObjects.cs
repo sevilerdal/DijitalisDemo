@@ -9,6 +9,7 @@ public class CreateObjects : MonoBehaviour
     public List<Item> objects;
     List<Vector3> positions = new List<Vector3>();
     ItemList itemIns;
+    Vector3 offset = new Vector3(0, 1.2f, -2);
     private void Awake()
     {
         itemIns = ItemList.Instance;
@@ -20,6 +21,7 @@ public class CreateObjects : MonoBehaviour
         {
             GameObject obj = Instantiate(prefab, target.position + Positions()[i], Quaternion.identity);
             ConfigureObject(obj, objects[i]);
+            obj.transform.position = GameObject.Find(obj.GetComponent<ItemInfo>().Address.ToString()).transform.position + offset;
         }
         PlaceObjects place = GameObject.FindObjectOfType<PlaceObjects>();
         place.Place();

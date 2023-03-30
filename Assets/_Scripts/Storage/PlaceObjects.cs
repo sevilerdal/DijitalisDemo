@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class PlaceObjects : MonoBehaviour
 {
     CreateObjects create;
@@ -25,7 +25,9 @@ public class PlaceObjects : MonoBehaviour
             {
                 targetPos = target.transform.position;
                 targetPos.y += 1.2f;
-                items[i].transform.position = targetPos;
+                items[i].transform.DOMoveZ(targetPos.z, 2).SetEase(Ease.InOutSine);
+
+                // items[i].transform.position = targetPos;
             }
         }
     }
