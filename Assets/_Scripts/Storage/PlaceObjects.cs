@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlaceObjects : MonoBehaviour
 {
     CreateObjects create;
-    ShelfDict shelves;
     Vector3 targetPos;
     public void Place()
     {
