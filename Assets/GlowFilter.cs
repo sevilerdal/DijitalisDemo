@@ -2,55 +2,60 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GlowFilter : MonoBehaviour
+public class GlowFilter : Singleton<GlowFilter>
 {
-    private Renderer _renderer;
+    private List<Renderer> renderers = new List<Renderer>();
     private MaterialPropertyBlock matBlock;
     private bool isGlowing;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+    }
+    private void SetReferences(List<GameObject> obj)
+    {
+        // Clearing list to prevent overriding previous filters
+        renderers.Clear();
+        // Get renderer of objects to change color of
+        for (int i = 0; i < obj.Count; i++)
+        {
+            renderers.Add(obj[i].GetComponent<Renderer>());
+        }
+    }
+
+    public void GlowOn(Color color, List<GameObject> obj)
+    {
+        Debug.Log($"obj : {obj.Count}");
+        Debug.Log($"color : {color}");
         // Creating new material block
         matBlock = new MaterialPropertyBlock();
-    }
-    private void SetReferences(GameObject obj)
-    {
-        // Get renderer of object to change color of
-        _renderer = obj.GetComponent<Renderer>();
-
-        // Clearing previous values of block
-        matBlock.Clear();
-    }
-
-    public void GlowOn(Color color, GameObject obj)
-    {
-        if (!isGlowing) // Checking if object is glowing
+        SetReferences(obj);
+        Debug.Log($"renderers : {obj.Count}");
+        for (int i = 0; i < renderers.Count; i++)
         {
-            isGlowing = true;
-            //Get renderer of current object and reset prev. values
-            SetReferences(obj);
-            _renderer.GetPropertyBlock(matBlock);
+            renderers[i].GetPropertyBlock(matBlock);
             // Set color to glow
             matBlock.SetColor("_GlowColor", color);
             // Set glow value to turn on glow
             matBlock.SetFloat("_GlowStrength", 0.5f);
             // Apply block values to material
-            _renderer.SetPropertyBlock(matBlock);
+            renderers[i].SetPropertyBlock(matBlock);
         }
     }
 
-    public void GlowOff(GameObject obj)
+    public void GlowOff(List<GameObject> obj)
     {
-        if (isGlowing) // Checking if object is glowing
-        {
-            isGlowing = false;
+        // Creating new material block
+        matBlock = new MaterialPropertyBlock();
+        SetReferences(obj);
 
-            //Get renderer of current object and reset prev. values
-            SetReferences(obj);
-            _renderer.GetPropertyBlock(matBlock);
-            // Set glow value to 0
+        for (int i = 0; i < renderers.Count; i++)
+        {
+            renderers[i].GetPropertyBlock(matBlock);
+            // Set glow value to turn on glow
             matBlock.SetFloat("_GlowStrength", 0f);
-            // Apply block to material
-            _renderer.SetPropertyBlock(matBlock);
+            // Apply block values to material
+            renderers[i].SetPropertyBlock(matBlock);
         }
+
     }
 }

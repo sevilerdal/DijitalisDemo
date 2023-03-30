@@ -7,26 +7,32 @@ public class CreateObjects : MonoBehaviour
     [SerializeField] private GameObject prefab;
     [SerializeField] private Transform target;
     public List<Item> objects;
-    public List<GameObject> insObjects;
     List<Vector3> positions = new List<Vector3>();
-    Vector3 pos;
+    ItemList itemIns;
+    private void Awake()
+    {
+        itemIns = ItemList.Instance;
+    }
     public void Create(List<Item> lsItem)
     {
         objects = lsItem;
         for (int i = 0; i < objects.Count; i++)
         {
             GameObject obj = Instantiate(prefab, target.position + Positions()[i], Quaternion.identity);
-            ItemInfo info = obj.AddComponent<ItemInfo>();
-            info.Address = objects[i].shelfAddress;
-            info.ExpDate = objects[i].expDate;
-            info.Content = objects[i].content;
-            info.isHeavy = objects[i].isHeavy;
-            insObjects.Add(obj);
+            ConfigureObject(obj, objects[i]);
         }
         PlaceObjects place = GameObject.FindObjectOfType<PlaceObjects>();
         place.Place();
     }
-
+    private void ConfigureObject(GameObject obj, Item item)
+    {
+        ItemInfo info = obj.AddComponent<ItemInfo>();
+        info.Address = item.shelfAddress;
+        info.ExpDate = item.expDate;
+        info.Content = item.content;
+        info.isHeavy = item.isHeavy;
+        itemIns.AddToList(obj);
+    }
     private List<Vector3> Positions()
     {
         positions.Clear();
@@ -46,6 +52,5 @@ public class CreateObjects : MonoBehaviour
         }
 
         return positions;
-
     }
 }

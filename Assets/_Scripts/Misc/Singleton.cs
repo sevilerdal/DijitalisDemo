@@ -2,17 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Singleton : MonoBehaviour
+public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static T Instance { get; private set; }
+
+    protected virtual void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = FindObjectOfType<T>();
+            if (Instance == null)
+            {
+                GameObject singleton = new GameObject();
+                Instance = singleton.AddComponent<T>();
+                singleton.name = typeof(T).ToString();
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void OnDisable()
     {
-        
+        Instance = null;
+        Destroy(gameObject);
+    }
+
+}
+
+public abstract class PersistentSingleton<T> : Singleton<T> where T : MonoBehaviour
+{
+    protected override void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        base.Awake();
+
+    }
+
+    protected override void OnDisable()
+    {
+        DontDestroyOnLoad(gameObject);
+        base.OnDisable();
     }
 }
+
+
+
+

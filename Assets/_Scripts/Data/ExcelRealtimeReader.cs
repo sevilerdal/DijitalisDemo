@@ -52,7 +52,6 @@ public class ExcelRealtimeReader : MonoBehaviour
         {
             Item temp = new Item();
             temp.shelfAddress = table.Rows[i][0].ToString();
-            Debug.Log(temp.shelfAddress);
             int.TryParse(table.Rows[i][1].ToString(), out temp.expDate);
             temp.content = table.Rows[i][2].ToString();
             temp.isHeavy = String.CompareOrdinal(heavy, table.Rows[i][3].ToString()) == 0;
