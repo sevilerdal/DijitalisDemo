@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class FilterBase : MonoBehaviour
 {
@@ -11,8 +8,6 @@ public class FilterBase : MonoBehaviour
     protected List<GameObject> set2 = new List<GameObject>();
     protected ItemList itemIns;
     protected SetFilter filter;
-    [SerializeField] private TextMeshProUGUI key1, key2;
-    [SerializeField] private Image clr1, clr2;
 
     protected virtual void OnEnable()
     {
