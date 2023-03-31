@@ -25,7 +25,6 @@ public class CreateObjects : MonoBehaviour
             ConfigureObject(obj, objects[i]);
             obj.transform.position = GameObject.Find(obj.GetComponent<ItemInfo>().Address.ToString()).transform.position + offset;
         }
-        CheckFilter.Instance.CheckF();
     }
     private void ConfigureObject(GameObject obj, Item item)
     {

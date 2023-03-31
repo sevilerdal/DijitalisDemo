@@ -23,7 +23,6 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     protected virtual void OnDisable()
     {
         Instance = null;
-        Destroy(gameObject);
     }
 
 }
