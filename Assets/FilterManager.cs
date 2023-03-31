@@ -8,7 +8,7 @@ public class FilterManager : Singleton<FilterManager>
     public FilterState state;
     public static event Action<FilterState> OnFilterChanged;
 
-    private void OnEnable()
+    private void Start()
     {
         UpdateFilterState(FilterState.NoFilter);
     }
@@ -24,7 +24,6 @@ public class FilterManager : Singleton<FilterManager>
 
         // Sends event to subscribed objects
         OnFilterChanged?.Invoke(state);
-        Debug.Log($"Filter : {state} state");
     }
 }
 

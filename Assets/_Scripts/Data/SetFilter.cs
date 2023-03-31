@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SetFilter : PersistentSingleton<SetFilter>
+public class SetFilter : Singleton<SetFilter>
 {
     private List<Renderer> renderers = new List<Renderer>();
     private MaterialPropertyBlock matBlock;
