@@ -1,4 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FilterByContent : FilterBase
 {
@@ -20,13 +24,11 @@ public class FilterByContent : FilterBase
                 set2.Add(item);
             }
         }
-        // Custom method to turn filter on
         TurnFOn(Color.green, set1, Color.yellow, set2);
     }
 
     protected override void FilterChange(FilterState state)
     {
-        // Checking if content filter should be on
         if (state == FilterState.ContentFilter)
         {
             FilterCon();

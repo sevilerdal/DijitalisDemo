@@ -8,13 +8,9 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Awake()
     {
-
         if (Instance == null)
         {
-            // Creating instance if it does not exist
             Instance = FindObjectOfType<T>();
-
-            // Creating object if it does not exist
             if (Instance == null)
             {
                 GameObject singleton = new GameObject();
@@ -28,8 +24,27 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         Instance = null;
     }
+
 }
 
+public abstract class PersistentSingleton<T> : Singleton<T> where T : MonoBehaviour
+{
+    protected override void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        base.Awake();
+
+    }
+
+    protected override void OnDisable()
+    {
+        DontDestroyOnLoad(gameObject);
+        base.OnDisable();
+    }
+}
 
 
 
