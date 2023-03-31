@@ -81,7 +81,7 @@ public class ExcelRealtimeReader : MonoBehaviour
     {
         while (true)
         {
-            Helper.GetWait(pollingInterval);
+            yield return new WaitForSeconds(pollingInterval);
 
             var currentModifiedTime = File.GetLastWriteTime(filePath);
             if (currentModifiedTime > lastModifiedTime)

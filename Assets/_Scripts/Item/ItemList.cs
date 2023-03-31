@@ -5,7 +5,7 @@ public class ItemList : Singleton<ItemList>
 {
     public List<GameObject> Items = new List<GameObject>();
 
-    [SerializeField] private CreationAnimation creationAnimation;
+
     protected override void Awake()
     {
         base.Awake();
@@ -19,8 +19,6 @@ public class ItemList : Singleton<ItemList>
     {
         Items.Add(item);
 
-        // Animates new item with glow
-        creationAnimation.AnimateObj(item);
     }
 
 
