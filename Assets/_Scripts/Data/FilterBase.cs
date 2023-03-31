@@ -31,11 +31,13 @@ public class FilterBase : MonoBehaviour
 
     protected virtual void ClearLists()
     {
+        // Clears lists to prevent confusion with data
         set1.Clear();
         set2.Clear();
         items.Clear();
     }
 
+    // Turns filter on 
     protected virtual void TurnFOn(Color clr1, List<GameObject> ls1,
                                      Color clr2, List<GameObject> ls2)
     {
