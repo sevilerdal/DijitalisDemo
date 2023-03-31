@@ -22,6 +22,7 @@ public class ExcelRealtimeReader : MonoBehaviour
 
     private void Start()
     {
+        filePath = Application.dataPath + "/Resources/SampleDataSet.xlsx";
         lastModifiedTime = File.GetLastWriteTime(filePath);
         ReadExcelData();
 

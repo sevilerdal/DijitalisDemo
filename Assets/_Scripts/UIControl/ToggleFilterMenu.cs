@@ -9,13 +9,14 @@ public class ToggleFilterMenu : MonoBehaviour
     public void ToggleMenu()
     {
         if (filterMenu == null) return;
-        if (filterMenu.activeSelf)
+
+        if (!filterMenu.activeSelf)
         {
-            filterMenu.SetActive(false);
+            filterMenu.SetActive(true);
         }
         else
         {
-            filterMenu.SetActive(true);
+            filterMenu.SetActive(false);
         }
     }
 }

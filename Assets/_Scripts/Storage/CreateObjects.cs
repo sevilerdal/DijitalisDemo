@@ -1,30 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class CreateObjects : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
     [SerializeField] private Transform target;
     public List<Item> objects;
     List<Vector3> positions = new List<Vector3>();
-    ItemList itemIns;
-    Vector3 offset = new Vector3(0, 1.2f, -2);
-    private void Awake()
+    [SerializeField] private ItemList itemIns;
+    Vector3 offset = new Vector3(0, 1.2f, 0);
+    GlowFilter filter;
+    private void Start()
     {
-        itemIns = ItemList.Instance;
+        //  itemIns = ItemList.Instance;
+        filter = GlowFilter.Instance;
     }
     public void Create(List<Item> lsItem)
     {
         objects = lsItem;
         for (int i = 0; i < objects.Count; i++)
         {
-            GameObject obj = Instantiate(prefab, target.position + Positions()[i], Quaternion.identity);
+            GameObject obj = Instantiate(prefab, Vector3.zero + Positions()[i], Quaternion.identity);
             ConfigureObject(obj, objects[i]);
             obj.transform.position = GameObject.Find(obj.GetComponent<ItemInfo>().Address.ToString()).transform.position + offset;
         }
-        PlaceObjects place = GameObject.FindObjectOfType<PlaceObjects>();
-        place.Place();
+        CheckFilter.Instance.CheckF();
     }
     private void ConfigureObject(GameObject obj, Item item)
     {
@@ -35,6 +36,7 @@ public class CreateObjects : MonoBehaviour
         info.isHeavy = item.isHeavy;
         itemIns.AddToList(obj);
     }
+
     private List<Vector3> Positions()
     {
         positions.Clear();
